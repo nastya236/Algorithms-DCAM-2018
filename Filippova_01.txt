@@ -1,0 +1,680 @@
+\documentclass[10pt]{amsart}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage[shortlabels]{enumitem} 
+\usepackage{amsxtra, upgreek}
+\usepackage{enumitem, fancyref, theoremref}
+\usepackage{amsmath, amssymb, amsthm, thmtools}
+\usepackage{amsrefs, latexsym,pstricks, mathtext}
+\usepackage{hyperref, caption, tikz, bbm}
+\usepackage{algorithm2e}
+\usepackage[left=0mm, top=0mm, right=0mm, bottom=0mm, nohead, nofoot]{geometry}
+
+\textwidth=42pc
+\calclayout
+
+%===============================================================================
+
+% Title settings for Russian language in amsart
+
+%===============================================================================
+
+\makeatletter
+\def\@settitle{\begin{center}%
+    \baselineskip14\p@\relax
+    \bfseries\scshape
+    \@title
+  \end{center}%
+}
+\makeatother
+
+%===============================================================================
+
+% Defined commands
+
+%===============================================================================
+
+\newcommand{\BR}{\mathbb{R}} %real numbers
+\newcommand{\BN}{\mathbb{N}} %natural numbers
+\newcommand{\BZ}{\mathbb{Z}} %integer numbers
+\newcommand{\BZp}{\BZ_{\geqslant 0}} %nonnegative integers
+\newcommand{\BC}{\mathbb{C}} %complex numbers
+\newcommand{\qet}[1]{| #1 \rangle} %qet vector notation
+\newcommand{\braqet}[2]{\langle #1 | #2 \rangle} %braqet
+\newcommand{\triqet}[3]{\langle #1 | #2 | #3 \rangle} %triqet
+\newcommand{\pst}[1]{\underline{#1}} %particle included in spaces
+\newcommand{\BP}{\mathbb{P}} %probability
+\newcommand{\const}{\mathrm{const}} %constant
+\newcommand{\vspan}[1]{\mathrm{span}\{ #1 \}} %span
+\newcommand{\ceiling}[1]{\lceil #1 \rceil} %ceiling
+\newcommand{\floor}[1]{\lfloor #1 \rfloor} %floor
+\newcommand{\Alg}{\mathrm{Alg}} %algorithm
+\newcommand{\row}{\mathrm{row}} %row
+\newcommand{\eps}{\varepsilon} %eps
+\newcommand{\Ss}{\Sigma^*} %all words
+\newcommand{\Einheit}{\mathbbm{1}} %characteristic function
+\newcommand{\RAMS}[4]{\big< #1, \{#2_i\}, \{#3_i\}, \{#4_i\} \big>} %RAM state
+
+%===============================================================================
+
+% Theorem styles
+
+%===============================================================================
+
+\theoremstyle{plain}
+\newtheorem*{quest}{Вопрос}
+\newtheorem{prop}{Утверждение}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem{hypoth}{Гипотеза}
+\newtheorem{lemma}{Лемма}[section]
+
+\theoremstyle{remark}
+\newtheorem{conseq}{Вывод}
+\newtheorem{rem}{Замечание}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Определение}
+
+\newtheoremstyle{problem}
+  {\topsep}   % ABOVESPACE
+  {\topsep}   % BELOWSPACE
+  {\normalfont}  % BODYFONT
+  {0pt}       % INDENT
+  {\bfseries} % HEADFONT
+  {.}         % HEADPUNCT
+  {5pt plus 1pt minus 1pt} % HEADSPACE
+  {}          % CUSTOM-HEAD-SPEC
+\newtheorem{problem}{Задача}
+
+
+\begin{document}
+    \textup{Филиппова Анастасия}
+
+\begin{center}
+
+    \large\textbf{Домашнее задание 1}
+
+\end{center}
+\begin{enumerate}
+    \item \begin{enumerate}
+        \item $n = O(n\cdot \log n)$
+        
+        По определению верхней грани: 
+        
+        $$\exists ~c>0,n_0\in N: \forall ~n\geqslant n_0 \hookrightarrow n \leqslant c\cdot \log n$$
+        
+        Возьмем $c = 1: 1 \leqslant \log n$  
+        
+        Очевидно, что при достаточно больших $n$ неравенство верно.
+
+        \item $\exists ~\upvarepsilon>0 : n\cdot \log n = \Omega(n^{1+\upvarepsilon})$
+        
+        По определению верхней грани: 
+        $$\exists ~c>0,~n_0\in N:\forall ~n\geqslant n_0 \hookrightarrow n\cdot \log n \geqslant c\cdot n^{1+\upvarepsilon}$$
+        
+        $\exists ~c>0,~n_0\in N:\forall ~n\geqslant n_0 \hookrightarrow \log n \geqslant c\cdot n^{\upvarepsilon}$
+        
+        Найдем предел отношения функций по правилу Лопяталя:
+        
+        
+$\lim_{n\to\infty} \left( \frac{\log n}{n^\upvarepsilon}\right) = \lim_{n\to\infty} \left( \frac{1}{n^\upvarepsilon \cdot \ln a \cdot \upvarepsilon}\right) = 0$
+
+Следовательно, $\log n = o(n^\upvarepsilon)$
+
+Тогда по опредению: 
+
+$$\forall ~c > 0 : \exists ~n_0 \in N :\forall ~n\geqslant n_0 \hookrightarrow \log n \leqslant c\cdot n^{\upvarepsilon}$$
+
+Очевидно, что мы получили противоречие.
+
+Ответ: утверждение неверно.
+
+        
+        \end{enumerate}
+    \item $f(n) = O(n^2)$, $g(n) = O(n)$, $g(n) = \Omega(1)$
+    
+    \begin{enumerate}
+        \item  Возможно ли: $h(n) = \Theta(n\cdot \log n)$ ?
+        
+        Пример: $f(n) = n\cdot \log n$, $g(n) = 1$
+        
+        $h(n) = n\cdot \log n$, тогда очевидно, что $h(n) = \Theta(n\cdot \log n)$
+        
+        Ответ: да, возможно.
+        
+        \item
+        Возможно ли: $h(n) = \Theta(n^3)$ ?
+        
+    По определениям верхней и нижней граней:
+        $$\exists ~c_1>0,~n_1\in N: \forall ~n\geqslant n_1 \hookrightarrow f(n) \leqslant c_1\cdot n^2$$
+        
+        $$\exists ~c_2>0,~n_2\in N: \forall ~n\geqslant n_2 \hookrightarrow g(n) \leqslant c_2\cdot n$$
+        
+        $$\exists ~c_3>0,~n_3\in N: \forall ~n\geqslant n_3 \hookrightarrow g(n) \geqslant c_3$$
+        
+        Тогда $h(n)\leqslant \frac{c_1\cdot n^2}{c_3}$, т.е:
+        
+        $$\exists ~c_4 = \frac{c_1}{c_3},~n_4 = max(n_1, n_3): \forall ~n\geqslant n_4 \hookrightarrow h(n) \leqslant c_4\cdot n^2$$
+        
+        Из этого следует, что $h(n) = O(n^2)$
+        
+        Но т.к. $h(n) = \Theta(n^3)$, то:
+
+        $$h(n) = \Omega(n^3)$$
+        
+        Получаем противоречие.
+        
+        Ответ: нет.
+    \end{enumerate}
+    \newpage
+    \item \begin{enumerate}
+        \item 
+        
+        \parindent=0cm 
+Псевдо - код:
+
+$s$ - текущая сумма переменных
+
+$n$ - длинна последовательности
+
+$i$ - счетчик цикла
+
+$a$ - текущая переменная
+\\
+
+\begin{algorithm}[H]
+    	считываем $n$
+    	
+    	\For{$i := 0 ~ to ~ n-1$ }
+    	{
+    	    считываем $a$;
+    	    
+    	    $s := s + a$;
+    	    
+    	}
+    	
+    	answer: $k$;
+\end{algorithm}
+\item 
+        
+        \parindent=0cm 
+Псевдо - код:
+
+$n$ - длинна последовательности
+
+$k$ - счетчик
+
+$a$ - текущая переменная
+
+$max$ - текущий максимальный элемент последовательности
+\\
+
+\begin{algorithm}[H]
+    	считываем $n$;
+    	
+    	$k := 1$;
+    	
+    	считываем $a$;
+    	
+    	$max := a$;
+    	
+    	\For{$i := 1 ~ to ~ n-1$ }
+    	{
+    	    считываем $a$;
+    	    
+    	    \If{($a = max$)}
+    	        {
+    	            $k := k + 1$;
+                }
+            \If{($a > max$)}
+    	        {
+    	            $max := a$;
+    	            
+    	            $k := 1$;
+                }
+    	}
+    	answer: $k$;
+\end{algorithm}
+
+\newpage
+\item 
+        
+        \parindent=0cm 
+Псевдо - код:
+
+$n$ - длинна последовательности
+
+$a'$ - последний считанный элемент последовательности
+
+$a$ - текущая переменная
+
+$max$ - максимальное число идущих подряд элементов последовательности
+
+$l$ - число идущих подряд элементов последовательности в конце уже считанной подпоследовательности
+\\
+
+\begin{algorithm}[H]
+    	считываем $n$;
+    	
+    	считываем $a'$;
+    	
+    	$max := 1$;
+    	
+    	$l := 1$;
+    	
+    	\For{$i := 1 ~ to ~ n-1$ }
+    	{
+    	    считываем $a$;
+    	    
+    	    \If{($a' = a$)}
+    	        {
+    	            $l := l + 1$;
+                }
+            \Else
+    	        {
+    	            $max := max(max, l)$;
+    	            
+    	            $l := 1$;
+                }
+                
+            $a' := a$
+        }
+        $max := max(max, l)$;
+        
+    	answer: $max$;
+\end{algorithm}
+    \end{enumerate}
+    \newpage
+    \item Пусть даны 3 массива $a$, $b$, $c$ размера $n$, $k$, $l$ соответственно.
+
+            \parindent=0cm 
+\begin{tiny}
+
+Псевдо - код:
+
+\begin{algorithm}[H]
+
+считываем $n$; считываем $k$; считываем $l$;
+
+$a$ - последняя считанная переменная из массива $a$;
+
+$b$ - последняя считанная переменная из массива $b$;
+$c$ - последняя считанная переменная из массива $c$;
+
+$n_1 := n$; $k_1 := k$; $l_1 := l$;
+
+$h$ - cчетчик;
+
+ считываем $a$, $b$, $c$;
+ 
+ $h := 0$;
+    	{
+    	
+    	    \While{($n_1 > 0$) \text{или} ($k_1 > 0$) \text{или} ($l_1 > 0$) }
+    	        {
+    	            \If{($a < b$) }
+    	            {
+    	            
+    	                \If{($a < c$)}
+    	                { 
+    	                    $h := h + 1$;
+    	                    
+    	                     \If{($n_1 > 0$) } {
+    	                    
+    	                    cчитываем $a$;
+    	                    
+    	                    $n_1 := n_1 - 1$;
+    	                    
+    	                    
+    	                    }
+    	                }
+    	                \If{($a > c$) }
+    	                {
+    	                    $h := h + 1$;
+    	                    
+    	                    \If{($l_1 > 0$) } {
+    	                    
+    	                    cчитываем $c$;
+    	                    
+    	                    $l_1 := l_1 - 1$;
+    	                    
+    	                    }
+    	                }
+    	                \If{($a = c$) }
+    	                {
+    	                \If{($n_1 > 0$) } {
+    	                
+    	                    cчитываем $a$;
+    	                    
+    	                    $n_1 := n_1 - 1$;
+    	                    
+    	                    }
+    	                }
+    	                \If{($l_1 > 0$) } {
+    	                
+    	                    cчитываем $c$;
+    	                    
+    	                    $l_1 := l_1 - 1$;
+    	                }
+    	                }
+    	            
+    	            
+    	            \If{($a > b$) }
+                        {
+    	                \If{($a > c$) }
+    	                {
+    	                    $h := h + 1$;
+    	                    
+                             \If{($b > c$) }
+                             
+                             { \If{($l_1 > 0$) } {
+                             
+    	                    считываем $c$;
+    	                    
+    	                    
+    	                    
+    	                    $l_1 := l_1 - 1$;}
+    	                }
+                             \If{($b < c$) }
+                             {
+                             
+                             { \If{($l_1 > 0$) } {
+                             
+    	                    считываем $b$;
+    	                    
+    	                    }
+    	                    
+    	                    $k_1 := k_1 - 1$;
+    	                }
+    	                }
+    	                     \If{($b = c$) }
+                             {
+                              \If{($k_1 > 0$) } {
+                              
+    	                    считываем $b$;
+    	                    
+    	                    $k_1 := k_1 - 1$;}
+    	                    
+    	                     \If{($l_1 > 0$) } {
+    	                     
+    	                    считываем $c$;
+    	                    
+    	                    $l_1 := l_1 - 1$;
+    	                    }
+    	                }
+    	                }
+    	                \If{($a < c$) }
+    	                {
+    	                    $h := h + 1$;
+    	                    
+    	                     \If{($k_1 > 0$) } {
+    	                     
+    	                    cчитываем $b$;
+    	                    
+    	                    $k_1 := k_1 - 1$;}
+    	                }
+    	                \If{($a = c$) }
+    	                {
+    	                    \If{($n_1 > 0$) } {
+    	                    
+    	                    cчитываем $a$;
+    	                    
+    	                    $n_1 := n_1 - 1$;
+    	                    
+    	                }
+    	                 \If{($l_1 > 0$) } {
+    	                 
+    	                    cчитываем $c$;
+    	                    
+    	                    $l_1 := l_1 - 1$;
+    	                    
+    	                    }
+    	                }
+    	                }
+    	                \If{($a = b$) }
+                        {
+                            \If{($a > c$)} {
+                                \If{($l_1 > 0$)} {
+                                    считываем $c$; 
+                                    
+                                    $l_1 := l_1 - 1$;
+                                }
+                            \If{($a < c$)} {
+                                \If{($n_1 > 0$)} {
+                                    считываем $a$;
+                                    
+                                    $n_1 := n_1 - 1$;
+                                }
+                                \If{($k_1 > 0$)} {
+                                    считываем $b$; 
+                                    
+                                    $k_1 := k_1 - 1$;
+                                }
+                            }
+                                
+                            }
+                        }
+                }
+                
+            answer: $h$;
+
+        }
+\end{algorithm}
+\end{tiny}
+    \newpage
+    Данный алгоритм корректен, так как, проходясь таким образом по массиву, мы не пропустим ни одного элемента и очевидно, что полученное $h$ и есть искомое количество элементов.
+    
+    Асимптотика:
+Очевидно, что для реализации данного алгоритма требуется $O(1)$ битов памяти, так как достаточно всего 7 переменных.
+
+Время работы алгоритма есть $O(n + k + l)$, то есть алгоритм линейный. 
+    
+    
+
+    
+    \item Создадим динамический массив $l$, в который на $i$ место будем записывать максимальную длину возврастающей подпоследовательности, заканчивающейся на $a[i]$ и массив $b$, в который на $i$ место будем записывать то $j$, на котором достигается максимум.
+    
+
+            \parindent=0cm 
+Псевдо - код:
+\\
+
+\begin{algorithm}[H]
+
+считываем $n$;
+
+$max$ - длина максимальной возрастающей подпоследовательности
+
+\For{$i := 0 ~ to ~ n-1$ }
+    	{
+    	    считываем $a[i]$;
+    	    
+    	    $l[i] := 1$;
+    	    
+    	    \For{$j := i - 1 ~ \text{down to} ~ 0$ }
+    	        {
+    	            считываем $a[j]$;
+    	            
+    	            \If{($a[i] > a[j]$) }
+    	            {
+    	                \If{($l[j] + 1 > l[i]$) }
+    	                {
+    	                    $l[i] := l[j] + 1$;
+    	                    
+    	                    $b[i] := j$;
+    	                }
+    	            }
+                }
+                считываем $l[0]$
+                
+                $max := l[0]$;
+                
+                $k := 1$;
+                
+            \For{$i := 1 ~ to ~ n-1$ }
+    	        {
+    	            считываем $l[i]$;
+    	            
+    	            \If{($l[i] > max$) }
+    	                {
+    	                    $max := l[i]$;
+    	                    
+    	                    $k := i$;
+
+    	                }
+    	        }
+    	        зная элемент $a[k]$, на котором заканчивается самая длиная возрастающая подпоследовательность, и зная элементы массива нетрудно востановить нужную подпоследовательность.
+        }
+\end{algorithm}
+
+Данный алгоритм корректен, так как позваляет найти длину самой длинной возрастающей подпоследовательности (если несколько подпоследовательностей - одну из них).
+
+И при помощи массива $b$ восстанавливает подпоследовательность.
+
+
+
+
+Асимптотика:
+Очевидно, что для реализации данного алгоритма требуется $O(n)$ битов памяти.
+
+Время работы алгоритма в худшем случае на массиве размера $n$ есть $O(n^2)$, так как есть вложенный цикл.
+
+\newpage
+    \item Кандидатом будем называть элемент, который может быть искомым. Будем рассматривать 3 возможных случая: считанный элемент равен кандидату, не равен и случай, при котором кандидат будет не определен.
+    
+    $k$ - кандидат
+    
+    $h$ - счетчик
+    
+    $a$ - текущая переменная
+
+    
+            \parindent=0cm 
+Псевдо - код:
+
+\begin{algorithm}[H]
+считываем $n$;
+
+считываем первую переменную $a$;
+
+$k := a$;
+
+$h := 1$;
+
+    	{
+    	    считываем $a$;
+    	    
+    	    \If{($k = a$) } 
+    		            {
+    		                $h := h + 1$;
+    		            }
+    	    \If{($k$ - не определен) } 
+    		            {
+    		                $h := 1$;
+    		                
+    		                $k := a$
+    		            }
+            \If{($k <> a$) } 
+    		            {
+    		                \If{($h = 1$) } 
+    		            {
+    		                $k$ не определен;
+    		                
+    		                $h := 1$;
+    		            }
+    		                \Else
+    		                {
+    		                $h := h - 1$;
+    		                }
+    		                
+
+    		            }
+    		            
+    	}
+    	answer : $k$ .
+    	
+    	
+    	
+\end{algorithm}
+    
+    Докажем корректность данного алгоритма: 
+    
+    
+    
+    Условие того, что в массиве больше, чем $\frac{n}{2}$ одинаковых элементов, гарантирует, что последним останется именно искомый элемент.
+    
+    Действительно: представим, что элементы массива можно разделить на два множества: множество искомых элементов, мощность которого больше $\frac{n}{2}$ и множество остальных.
+    
+    
+    Данный алгоритм "вычеркивает" элементы массива попарно:один из первого множество, второй - из второго.
+    
+    В итоге, так как мощность первого больше $\frac{n}{2}$,
+    кандидат и будет искомым элементом.
+    
+    Найдем асимптотику:
+    
+    Для реализации данного алгоритма требуется $O(1)$ битов памяти, так как не зависит от длины последовательности.
+    Алгоритм выполняется за $O(n)$ времени, так как мы один раз проходимся по последовательности.
+\end{enumerate}
+\newpage
+Задача с семинара:
+
+        \parindent=0cm 
+
+
+$n$ - длина первой последовательности
+
+$k$ - длина второй последовательности
+
+Псевдо - код:
+
+\begin{algorithm}[H]
+    	считываем $n$;
+    	
+    	считываем $k$;
+    	
+    	$n_1 := n$;
+    	
+    	$k_1 := k$;
+    	{
+    	
+    	\While {($n_1 > 0$) ~\and~ ($k_1 > 0$) }
+    	{
+    	    
+    	    \If{($a[n_1] = b[k_1]$)}
+    	        {
+    	            $k_1 := k_1 - 1$;
+    	            
+    	            $n_1 := n_1 - 1$;
+                }
+            \Else
+    	  {
+    	            
+    	            $n_1 := n_1 - 1$;
+                }
+    	}
+    	
+    	\If{($k_1 = 0$)}
+    	{
+    	    answer : да;
+    	}
+    	\Else
+    	{
+    	    answer : нет;
+    	}
+    	}
+\end{algorithm}
+    Асимптотика:
+Очевидно, что для реализации данного алгоритма требуется $O(1)$ битов памяти.
+
+Алгоритм выполняется за $O(n + k)$ времени.
+
+Корректность:
+
+Очевидно, что мы дойдём до конца последовательности $b$ только в том случае, если все элементы последовательности содержаться в последовательности $a$, т.е., что $b$ - подпоследовательность $a$.
+
+    
+\end{document}
+
+

@@ -1,0 +1,270 @@
+\documentclass[10pt]{amsart}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage[shortlabels]{enumitem} 
+\usepackage{amsxtra, upgreek}
+\usepackage{enumitem, fancyref, theoremref}
+\usepackage{amsmath, amssymb, amsthm, thmtools}
+\usepackage{amsrefs, latexsym,pstricks, mathtext}
+\usepackage{hyperref, caption, tikz, bbm}
+\usepackage{algorithm2e}
+\usepackage[left=0mm, top=0mm, right=0mm, bottom=0mm, nohead, nofoot]{geometry}
+
+\textwidth=42pc
+\calclayout
+
+%===============================================================================
+
+% Title settings for Russian language in amsart
+
+%===============================================================================
+
+\makeatletter
+\def\@settitle{\begin{center}%
+    \baselineskip14\p@\relax
+    \bfseries\scshape
+    \@title
+  \end{center}%
+}
+\makeatother
+
+%===============================================================================
+
+% Defined commands
+
+%===============================================================================
+
+\newcommand{\BR}{\mathbb{R}} %real numbers
+\newcommand{\BN}{\mathbb{N}} %natural numbers
+\newcommand{\BZ}{\mathbb{Z}} %integer numbers
+\newcommand{\BZp}{\BZ_{\geqslant 0}} %nonnegative integers
+\newcommand{\BC}{\mathbb{C}} %complex numbers
+\newcommand{\qet}[1]{| #1 \rangle} %qet vector notation
+\newcommand{\braqet}[2]{\langle #1 | #2 \rangle} %braqet
+\newcommand{\triqet}[3]{\langle #1 | #2 | #3 \rangle} %triqet
+\newcommand{\pst}[1]{\underline{#1}} %particle included in spaces
+\newcommand{\BP}{\mathbb{P}} %probability
+\newcommand{\const}{\mathrm{const}} %constant
+\newcommand{\vspan}[1]{\mathrm{span}\{ #1 \}} %span
+\newcommand{\ceiling}[1]{\lceil #1 \rceil} %ceiling
+\newcommand{\floor}[1]{\lfloor #1 \rfloor} %floor
+\newcommand{\Alg}{\mathrm{Alg}} %algorithm
+\newcommand{\row}{\mathrm{row}} %row
+\newcommand{\eps}{\varepsilon} %eps
+\newcommand{\Ss}{\Sigma^*} %all words
+\newcommand{\Einheit}{\mathbbm{1}} %characteristic function
+\newcommand{\RAMS}[4]{\big< #1, \{#2_i\}, \{#3_i\}, \{#4_i\} \big>} %RAM state
+
+%===============================================================================
+
+% Theorem styles
+
+%===============================================================================
+
+\theoremstyle{plain}
+\newtheorem*{quest}{Вопрос}
+\newtheorem{prop}{Утверждение}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem{hypoth}{Гипотеза}
+\newtheorem{lemma}{Лемма}[section]
+
+\theoremstyle{remark}
+\newtheorem{conseq}{Вывод}
+\newtheorem{rem}{Замечание}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Определение}
+
+\newtheoremstyle{problem}
+  {\topsep}   % ABOVESPACE
+  {\topsep}   % BELOWSPACE
+  {\normalfont}  % BODYFONT
+  {0pt}       % INDENT
+  {\bfseries} % HEADFONT
+  {.}         % HEADPUNCT
+  {5pt plus 1pt minus 1pt} % HEADSPACE
+  {}          % CUSTOM-HEAD-SPEC
+\newtheorem{problem}{Задача}
+
+
+\begin{document}
+    \textup{Филиппова Анастасия}
+
+\begin{center}
+
+    \large\textbf{Домашнее задание 2}
+
+\end{center}
+\begin{enumerate}
+    \item Найдем верхнюю оценку:\\
+    $\sum \sqrt{i^3 + 2i + 5} < n\cdot \sqrt{n^3 + 2n + 5} \Rightarrow{} \sum \sqrt{i^3 + 2i + 5} = O(n^{\frac{5}{2}})$\\
+    Найдем нижнюю оценку:\\
+    Для этого возьмем верние $\frac{n}{2}$ членов.Очевидно, что:\\
+    $\sum \sqrt{i^3 + 2i + 5} > \frac {n}{2}\cdot \sqrt{\frac{n^3}{8} + n + 5}\Rightarrow \sum \sqrt{i^3 + 2i + 5} = \Omega(n^{\frac{5}{2}})$\\
+    Следовательно, $\sum \sqrt{i^3 + 2i + 5} = \Theta(n^{\frac{5}{2}})$  
+    \item $f(n) = (3 + o(1))^{n} + \Theta(n^{100})\\
+    \text{Верно ли, что: }\log f(n) = \Theta(n)$?\\
+    $f(n) > (3^n) + \Theta(n^{100}) < 3^n$\\
+    Так как $\forall~ n\in N ~ f(n) > 0\Rightarrow \log f(n) > n\cdot \log 3$, тогда $\log f(n) = \Omega(n)$\\
+    Пусть $o(1) = g(n)\text{,} \Theta(n^{100}) = h(n)$, получаем:\\
+    $\forall ~ c > 0\hookrightarrow g(n) < c\\
+    \exists c_1, c_2 > 0, n_0\in N:\forall~n \geqslant n_0\hookrightarrow c_1\cdot n^{100} \leqslant h(n)\leqslant c_2\cdot n^{100} $ \\
+    $f(n) < (3 + c)^n + c_2\cdot n^{100}$\\
+    Очевидно, что $3^n = \Omega(n^{100})$, тогда:\\
+    $\exists ~ c' > 0, N\in N:\forall~ n\geqslant N\hookrightarrow (3 + c)^n\geqslant c'\cdot n^{100}\Rightarrow\\
+    \exists~ C > 0 (C = 1/c'): f(n) < C(3 + c)^n\Rightarrow \log f(n) = O(n)$\\
+    Следовательно, $\log f(n) = \Theta(n)$
+    \item Пусть $b = bound$, опишим внутренний цикл:\\
+    $\sum\limits_{i=0}^{b-1} \frac{i}{2} + b\log n) = \frac{b(b - 1)}{4} + b\log n = \frac{b^2 - b}{4} + b\log n$\\
+    Внешний цикл: \\
+    $\sum\limits_{b=1}^{k}\frac{b^2 - b}{4} + b\log n, \sqrt{n} > k > \sqrt{n}-1$, тогда:$\sum\limits_{b=1}^{k}\frac{b^2 - b}{4} + b\log n = \Theta(n\cdot n^2) = \Theta(n^{\frac{3}{2}})$
+    \item \begin{enumerate}
+        \item $238x + 385y = 133$
+        $(238, 385) = (238, 147) = (147, 91) = (91, 56) = (56, 35) = (35, 21) = 7\\
+        7|133\Rightarrow$ уравнение имеет целые решения.\\
+        Разделим обе части уравнения на $7$:\\
+        $34x + 55y = 19$,частное решение:\\
+        $34x_0 + 55y_0 = 1$\\
+        $34
+        \begin{pmatrix}
+  \ $1$\\
+  \ $0$\\
+\end{pmatrix}
+~~55
+       \begin{pmatrix}
+  \ $0$\\
+  \ $1$\\
+\end{pmatrix}\\$
+$21
+\begin{pmatrix}
+  \ $-1$\\
+  \ $1$\\
+\end{pmatrix}$
+$~~~34
+\begin{pmatrix}
+  \ $1$\\
+  \ $0$\\
+\end{pmatrix}\\
+8
+\begin{pmatrix}
+  \ $-3$\\
+  \ $2$\\
+\end{pmatrix}
+~~~13
+\begin{pmatrix}
+  \ $2$\\
+  \ $-1$\\
+\end{pmatrix}\\
+5
+\begin{pmatrix}
+  \ $5$\\
+  \ $-3$\\
+\end{pmatrix}
+~~~8
+\begin{pmatrix}
+  \ $-3$\\
+  \ $2$\\
+\end{pmatrix}\\
+3
+\begin{pmatrix}
+  \ $-8$\\
+  \ $5$\\
+\end{pmatrix}
+~~~5
+\begin{pmatrix}
+  \ $5$\\
+  \ $-3$\\
+\end{pmatrix}\\
+2
+\begin{pmatrix}
+  \ $13$\\
+  \ $-8$\\
+\end{pmatrix}
+~~~3
+\begin{pmatrix}
+  \ $-8$\\
+  \ $5$\\
+\end{pmatrix}\\
+1
+\begin{pmatrix}
+  \ $-21$\\
+  \ $13$\\
+\end{pmatrix}
+~~~2
+\begin{pmatrix}
+  \ $13$\\
+  \ $-8$\\
+\end{pmatrix}\\
+$\\
+Получили частное решение:\\
+$x_0 = 19\cdot (-21) = -399\\
+y_0 = 19\cdot 13 = 247$\\
+Общее решение:\\
+$x = -399 + k\cdot 55\\
+y = 247 + k\cdot 34$, $k \in Z$
+\item $143x + 121y = 52$\\
+$(143, 121) = 11\\
+(52, 11) = 1\Rightarrow$ решений нет.
+
+    \end{enumerate}\newpage
+    \item (с семинара)\\
+    $3^{11}~mod~102$\\
+    $1) (3, 5, 102) , return~ 3\cdot (3^5~mod~102)^2\\
+    2) (3, 2, 102), return~ 3\cdot (3^2~mod~102)^2\\
+    3) (3, 1, 102), return~ 3\cdot(3^1~mod~102)^2\\
+    4) (3, 0, 102), return~1$\\
+    Получаем:$4)1, 3) 9\cdot 3 = 27, 2) 81\cdot 3 ~mod ~102 = 29, 1)(29\cdot 29 ~mod~102)\cdot 3~mod~102 = 75$\\
+    $(7)$ (с семинара)
+\\
+    \parindent=0cm 
+Псевдо - код:
+\\
+\begin{algorithm}[H]
+    Multiply$(x, y)$
+    {
+    	    \If{($y == 0$)}{
+    	        return $0$;
+    	    $z = Multiply(x; \frac{y}{2});$\\}
+    	    \If{($y~mod~2 == 0$)} {
+    	    return $2z$;\\}
+    	    \Else {
+    	    return $x + 2z$\\}
+    }
+\end{algorithm}\\
+Данный алгоритм корректен, так как сделует правилу:\\
+при $y = 0$ возвращает $0$;\\
+при $y \neq 0$: $ 2\cdot x\frac{y}{2}$, при y четном, $2\cdot x\frac{y}{2} + x$, при y нечетном.\\
+Сложность алгоритма:\\
+если запись числа содержит $n$ битов, то для завершения алгоритма понадобится n рекурсивных вызовов(так как при каждом таком вызове длина числа уменьшается на $1$).В каждом рекрсивном вызове происходит $O(n)$ битовых операций.Получаем сложность $O(n^2)$.\\
+$(5)$ (домашнее задание)\\
+Задача: найти такие $q, r: x = yq + r$.\\
+\begin{algorithm}[H]
+    Divide$(x, y)$
+    {
+    	    \If{($x == 0$)}{
+    	        return $(0, 0)$;}
+    	    $(q, r) = Multiply(( \frac{x}{2});y)\\
+    	    q = 2q;\\
+    	    r = 2r;$\\
+    	    \If{($x~mod~2\neq 0$)} {
+    	    $r = r + 1$;
+    	    }
+    	    \If{($r\geqslant y$)} {
+    	    $r = r - y;\\
+    	    q = q +1;$\\
+    	    }
+    	    $return (q, r);$
+    }
+\end{algorithm}\\
+Очевидно, что данный алгоритм корректен, потому что подчиняется следующему правилу:\\
+при $x = 0$ возвращает $(0, 0)$,\\
+при $x \neq 0$:\\
+если $x$ - четное и $r < y$ : $x = 2[x/2] + 2r$;\\
+если $x$ - четное и $r >= y$ : $x = 2[x/2] + 1 + r - y;$\\
+если $x$ - не четное и $r < y$ : $x = 2[x/2] + 2r + 1;$\\
+если $x$ - не четное и $r > y$ : $x = 2[x/2] + 2r + y +1$.\\
+Сложность алгоритма:\\
+Аналогична алгоритму умножения: если число x записывается с помощью n битов, то для завершения алгоритма требуется n рекурсивных вызовов.При каждом рекурсивном вызове совершается $O(n)$ битовых операций.Получаем $O(n)$ битовых операций для n-битовых входов $\Rightarrow$ время работы алгоритма $O(n^2)$.
+    \end{enumerate}
+\end{document}
